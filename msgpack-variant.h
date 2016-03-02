@@ -130,6 +130,9 @@ inline packer<Stream>& pack_variant(packer<Stream>& o, const Variant& v, int dep
       o.pack_raw_body(str.c_str(), str.size());
       break;
     }
+#if (HHVM_VERSION_MAJOR == 3 && HHVM_VERSION_MINOR >= 11 || HHVM_VERSION_MAJOR > 3)
+    case KindOfPersistentArray:
+#endif
     case KindOfArray: {
       Array array = v.toArray();
       if (array->isVectorData()) {
